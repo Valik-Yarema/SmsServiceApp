@@ -39,7 +39,7 @@ namespace WebCustomerApp.Controllers
 
         [TempData]
         public string ErrorMessage { get; set; }
-
+        #region Login
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
@@ -61,7 +61,7 @@ namespace WebCustomerApp.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -196,6 +196,7 @@ namespace WebCustomerApp.Controllers
                 return View();
             }
         }
+        #endregion
 
         [HttpGet]
         [AllowAnonymous]
@@ -203,7 +204,7 @@ namespace WebCustomerApp.Controllers
         {
             return View();
         }
-
+        #region Register
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
@@ -220,7 +221,9 @@ namespace WebCustomerApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                
+
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
 				if (result.Succeeded)
@@ -241,7 +244,7 @@ namespace WebCustomerApp.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -311,7 +314,7 @@ namespace WebCustomerApp.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };//correct
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
