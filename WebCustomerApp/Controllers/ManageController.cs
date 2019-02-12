@@ -42,7 +42,7 @@ namespace WebCustomerApp.Controllers
             _logger = logger;
             _urlEncoder = urlEncoder;
         }
-
+        
         [TempData]
         public string StatusMessage { get; set; }
 

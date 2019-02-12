@@ -39,6 +39,7 @@ namespace WebCustomerApp.Controllers
 
         [TempData]
         public string ErrorMessage { get; set; }
+      
         #region Login
         [HttpGet]
         [AllowAnonymous]
@@ -204,6 +205,7 @@ namespace WebCustomerApp.Controllers
         {
             return View();
         }
+      
         #region Register
         [HttpGet]
         [AllowAnonymous]
@@ -223,7 +225,7 @@ namespace WebCustomerApp.Controllers
             {
                 
 
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email ,PhoneNumber=model.PhoneNumber};
                 var result = await _userManager.CreateAsync(user, model.Password);
 
 				if (result.Succeeded)
@@ -245,6 +247,7 @@ namespace WebCustomerApp.Controllers
             return View(model);
         }
         #endregion
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -253,7 +256,7 @@ namespace WebCustomerApp.Controllers
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-
+        #region ExternalLogin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -332,7 +335,7 @@ namespace WebCustomerApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View(nameof(ExternalLogin), model);
         }
-
+        #endregion
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
@@ -350,6 +353,8 @@ namespace WebCustomerApp.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
+
+        #region Password
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -433,7 +438,7 @@ namespace WebCustomerApp.Controllers
         {
             return View();
         }
-
+        #endregion
 
         [HttpGet]
         public IActionResult AccessDenied()
