@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.DB;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebCustomerApp.Models;
@@ -13,6 +14,11 @@ namespace WebCustomerApp.Data
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
 			Database.EnsureCreated();
 		}
+
+        public DbSet<MessageRec> MessageRecs { get; set; }
+        public DbSet<PhoneRec> PhoneRecs { get; set; }
+        public DbSet<AddInfo> AddInfos { get; set; }
+        public DbSet<UserMessage> UserMessages{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

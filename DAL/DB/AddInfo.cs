@@ -11,10 +11,10 @@ namespace DAL.DB
         [Key]
         public int AdInfoId { get; set; }
 
-        public int? PhonesId { get; set; }
-        [ForeignKey("PhonesId")]
+        public int? PhoneId { get; set; }
+        [ForeignKey("PhoneId")]
         public PhoneRec PhoneRec { get; set; }
 
-        public string AddfInfo { get; set; }
+        public string TextInfo { get; set; }
     }
 }
