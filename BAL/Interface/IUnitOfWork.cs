@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL.Interface
+namespace BAL.Interface
 {
-    interface IUnitOfWork : IDisposable
+     public interface IUnitOfWork : IDisposable
     {
         void Save();
       

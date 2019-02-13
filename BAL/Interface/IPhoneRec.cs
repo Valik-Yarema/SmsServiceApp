@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL.Interface
+namespace BAL.Interface
 {
-    interface IPhoneRec : IRepository<PhoneRec>
+    public interface IPhoneRec : IRepository<PhoneRec>
     {
         void CreatePhone(string phoneNumber);
         PhoneRec SearchByPhone(string phoneNumber);

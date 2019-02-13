@@ -1,14 +1,14 @@
 ﻿using DAL.DB;
-using DAL.Interface;
+using BAL.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WebCustomerApp.Data;
 
-namespace DAL.Repository
+namespace BAL.Repository
 {
-    class AddInfoRepository:GenericRepository<AddInfo>, IAddInfo
+    public class AddInfoRepository:GenericRepository<AddInfo>, IAddInfo
     {
         public AddInfoRepository(ApplicationDbContext context) : base(context)
     {

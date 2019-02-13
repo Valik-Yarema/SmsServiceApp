@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DAL.Interface
+namespace BAL.Interface
 {
     public interface IRepository<TEntity> where TEntity : class
     {

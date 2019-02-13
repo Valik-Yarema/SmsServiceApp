@@ -1,12 +1,12 @@
 ﻿using DAL.DB;
-using DAL.Interface;
+using BAL.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WebCustomerApp.Data;
 
-namespace DAL.Repository
+namespace BAL.Repository
 {
     public class PhoneRecRepository : GenericRepository<PhoneRec>, IPhoneRec
     {

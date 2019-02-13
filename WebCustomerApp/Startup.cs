@@ -38,7 +38,7 @@ namespace WebCustomerApp
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = true;
                 options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = true;
+               // options.SignIn.RequireConfirmedEmail = true; 
             }
             )
             

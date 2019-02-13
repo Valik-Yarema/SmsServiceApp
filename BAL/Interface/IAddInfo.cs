@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL.Interface
+namespace BAL.Interface
 {
     public interface IAddInfo : IRepository<AddInfo>
     {
