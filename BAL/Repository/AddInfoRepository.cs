@@ -13,9 +13,6 @@ namespace BAL.Repository
         public AddInfoRepository(ApplicationDbContext context) : base(context)
     {
     }
-    
-       
-
         public void Create(string addInfo, int phoneId)
         {
             AddInfo information = new AddInfo() { TextInfo = addInfo, PhoneId = phoneId };

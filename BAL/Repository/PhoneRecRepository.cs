@@ -14,7 +14,7 @@ namespace BAL.Repository
         {
         }
 
-        public void CreatePhone(string phoneNumber)
+        public void Create(string phoneNumber)
         {
             PhoneRec phone = new PhoneRec() { PhoneNumber = phoneNumber };
             context.PhoneRecs.Add(phone);

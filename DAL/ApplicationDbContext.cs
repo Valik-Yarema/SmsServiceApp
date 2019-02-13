@@ -15,7 +15,7 @@ namespace WebCustomerApp.Data
 			Database.EnsureCreated();
 		}
 
-        public DbSet<MessageRec> MessageRecs { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<PhoneRec> PhoneRecs { get; set; }
         public DbSet<AddInfo> AddInfos { get; set; }
         public DbSet<UserMessage> UserMessages{ get; set; }

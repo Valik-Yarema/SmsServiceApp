@@ -12,6 +12,9 @@ using WebCustomerApp.Data;
 using WebCustomerApp.Models;
 using WebCustomerApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using DAL.DB;
+using BAL.Interface;
+using BAL.Repository;
 
 namespace WebCustomerApp
 {
@@ -41,12 +44,16 @@ namespace WebCustomerApp
                // options.SignIn.RequireConfirmedEmail = true; 
             }
             )
-            
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IAddInfo, AddInfoRepository>();
+
+            services.AddScoped<IMessage, MessageRepository>();
+            services.AddScoped<IPhoneRec, PhoneRecRepository>();
+            services.AddScoped<IUserMessage, UserMessageRepository>();
 
       //    services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");});
 

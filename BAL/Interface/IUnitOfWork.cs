@@ -7,6 +7,6 @@ namespace BAL.Interface
      public interface IUnitOfWork : IDisposable
     {
         void Save();
-      
+       
     }
 }

@@ -199,6 +199,8 @@ namespace WebCustomerApp.Controllers
         }
         #endregion
 
+        #region Register
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
@@ -206,7 +208,6 @@ namespace WebCustomerApp.Controllers
             return View();
         }
       
-        #region Register
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
@@ -248,6 +249,7 @@ namespace WebCustomerApp.Controllers
         }
         #endregion
 
+        #region ExternalLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -256,7 +258,7 @@ namespace WebCustomerApp.Controllers
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-        #region ExternalLogin
+  
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -335,7 +337,7 @@ namespace WebCustomerApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View(nameof(ExternalLogin), model);
         }
-        #endregion
+      
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
@@ -352,7 +354,7 @@ namespace WebCustomerApp.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
-
+        #endregion
 
         #region Password
         [HttpGet]

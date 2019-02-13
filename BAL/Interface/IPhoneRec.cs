@@ -7,7 +7,7 @@ namespace BAL.Interface
 {
     public interface IPhoneRec : IRepository<PhoneRec>
     {
-        void CreatePhone(string phoneNumber);
+        void Create(string phoneNumber);
         PhoneRec SearchByPhone(string phoneNumber);
     }
 }

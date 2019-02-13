@@ -6,12 +6,12 @@ using System.Text;
 
 namespace DAL.DB
 {
-    public class MessageRec
+    public class Message
     {
         [Key]
         public int MesRecId { get; set; }
-        public int? PhonesId { get; set; }
-        public int? MessageId { get; set; }
+        public int? PhoneId { get; set; }
+        public int? UserMesId { get; set; }
 
         public DateTime DateCreate { get; set; }
         [Required]
@@ -21,12 +21,12 @@ namespace DAL.DB
         public int PeriodCount { get; set; }
 
 
-        [ForeignKey("PhonesId")]
+        [ForeignKey("PhoneId")]
         public PhoneRec PhoneRec { get; set; }
-        [ForeignKey("MessageId")]
+        [ForeignKey("UserMesId")]
         public UserMessage UserMessage { get; set; }
 
-        public MessageRec()
+        public Message()
         {
             DateCreate = DateTime.Now.Date;
             DateStart = DateTime.Now.Date;// need default ??? 

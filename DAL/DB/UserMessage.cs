@@ -10,18 +10,18 @@ namespace DAL.DB
    public class UserMessage
     {
         [Key]
-        public int MessageId { get; set; }
+        public int UserMesId { get; set; }
+
         [ForeignKey("ApplicationUser")]
         public string Id { get; set; }
-
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public string MessageText { get; set; }
 
-        public ICollection<MessageRec> MesMesColl { get; set; }
+        public ICollection<Message> MesMesColl { get; set; }
         public UserMessage()
         {
-            MesMesColl = new List<MessageRec>();
+            MesMesColl = new List<Message>();
         }
     }
 }
