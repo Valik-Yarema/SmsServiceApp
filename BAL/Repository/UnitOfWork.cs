@@ -14,7 +14,7 @@ namespace BAL.Repository
         private readonly ApplicationDbContext _DbContext;
         private bool disposed = false;
         private AddInfoRepository     infoRepository;
-        public UserManager<ApplicationUser> userRepository     { get; }
+        public UserManager<ApplicationUser> UserRepository     { get; }
         public SignInManager<ApplicationUser> SignInRepository { get; }
         private UserMessageRepository userMessageRepository;
         private PhoneRecRepository    recRepository;
@@ -23,7 +23,7 @@ namespace BAL.Repository
         public UnitOfWork(ApplicationDbContext connectionContext,UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInRepository)
         {
             _DbContext = connectionContext;
-            userRepository = userManager;
+            UserRepository = userManager;
             SignInRepository = signInRepository;
         }
         
@@ -49,8 +49,9 @@ namespace BAL.Repository
                 }
                 return userMessageRepository;
             }
+            
         }
-        public PhoneRecRepository RecRepository
+        public PhoneRecRepository PhoneRecRepository
         {
             get
             {
@@ -75,6 +76,12 @@ namespace BAL.Repository
 
         }
 
+       
+
+       
+
+   
+
         #region default Save & Dispose
         public void Save()
         {
@@ -98,6 +105,8 @@ namespace BAL.Repository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+      
 
         #endregion
     }
