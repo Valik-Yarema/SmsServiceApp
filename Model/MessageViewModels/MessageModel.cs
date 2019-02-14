@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Model.MessageViewModels
+
+namespace WebCustomerApp.Models.MessageViewModels
 {
    public  class MessageModel
     {
@@ -17,6 +21,6 @@ namespace Model.MessageViewModels
         public string MessageText { get; set; }
 
         [Display(Name = "Recepient name (may be empty)")]
-        public string NameRes { get; set; }
+        public string NameResipient { get; set; }
     }
 }

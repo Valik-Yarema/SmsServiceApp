@@ -1,11 +1,12 @@
 ﻿using BAL.Interface;
 using DAL.DB;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Model.MessageViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebCustomerApp.Models.MessageViewModels;
 
 namespace WebApp.Controllers
 {
@@ -18,7 +19,7 @@ namespace WebApp.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
+        [HttpGet]
         public IActionResult MessageCreate(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -26,19 +27,20 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MessageCreate(MessageModel model, string returnUrl = null)
+        [ValidateAntiForgeryToken]
+        public IActionResult MessageCreate(MessageModel model, string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
                 UserMessage message = new UserMessage() { MessageText = model.MessageText, Id = _unitOfWork.UserRepository.GetUserId(User) };
                 PhoneRec phone = new PhoneRec() { PhoneNumber = model.PhoneNumber };
-                 _unitOfWork.UserMessageRepository.Add(message);
+                _unitOfWork.UserMessageRepository.Add(message);
                 _unitOfWork.PhoneRecRepository.Add(phone);
                 _unitOfWork.Save();
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(model);
+            return View("");
 
         }
 
