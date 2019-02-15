@@ -40,7 +40,7 @@ namespace WebApp.Controllers
             //position move https://www.w3schools.com/howto/howto_js_draggable.asp
             //Bootstrap https://www.w3schools.com/howto/howto_make_a_website.asp
             if (ModelState.IsValid)
-            {
+            {  
                 UserMessage message = new UserMessage() { MessageText = model.MessageText, Id = _unitOfWork.UserRepository.GetUserId(User) };
                 PhoneRec phone = new PhoneRec() { PhoneNumber = model.PhoneNumber };
                 _unitOfWork.UserMessageRepository.Add(message);

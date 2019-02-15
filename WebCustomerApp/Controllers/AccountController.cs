@@ -16,6 +16,7 @@ using WebCustomerApp.Services;
 
 namespace WebCustomerApp.Controllers
 {
+        #region AccountController
     [Authorize]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
@@ -39,7 +40,8 @@ namespace WebCustomerApp.Controllers
 
         [TempData]
         public string ErrorMessage { get; set; }
-      
+        #endregion
+     
         #region Login
         [HttpGet]
         [AllowAnonymous]
@@ -440,13 +442,12 @@ namespace WebCustomerApp.Controllers
         {
             return View();
         }
-        #endregion
-
         [HttpGet]
         public IActionResult AccessDenied()
         {
             return View();
         }
+        #endregion
 
         #region Helpers
 

@@ -14,13 +14,13 @@ namespace WebCustomerApp.Models.MessageViewModels
         [Required]
         [Display(Name = "Recepient phone number")]
         [RegularExpression(@"^\+[0-9]{12}$", ErrorMessage = "Invalid phone number")]
-       public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required]
         [Display(Name = "Text message")]
         public string MessageText { get; set; }
 
         [Display(Name = "Recepient name (may be empty)")]
-        public string NameResipient { get; set; }
+        public string NameRecipient { get; set; }
     }
 }
