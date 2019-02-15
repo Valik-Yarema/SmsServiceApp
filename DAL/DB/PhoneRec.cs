@@ -16,12 +16,12 @@ namespace DAL.DB
 
 
         public ICollection<AddInfo> PhoneColl { get; set; }
-        public ICollection<Message> PhoneMesColl { get; set; }
+     //   public ICollection<Message> PhoneMesColl { get; set; }
 
         public PhoneRec()
         {
             PhoneColl = new List<AddInfo>();
-            PhoneMesColl = new List<Message>();
+         //   PhoneMesColl = new List<Message>();
         }
     }
 }
