@@ -13,13 +13,13 @@ namespace DAL.DB
         public int? PhoneId { get; set; }
         public int? UserMesId { get; set; }
 
-        public DateTime DateCreate { get; set; }
+     /*   public DateTime DateCreate { get; set; }
         [Required]
         public DateTime DateStart { get; set; }
         [Required]
         public DateTime DateEnd { get; set; }
         public int PeriodCount { get; set; }
-
+        */
 
         [ForeignKey("PhoneId")]
         public PhoneRec PhoneRec { get; set; }
@@ -28,8 +28,8 @@ namespace DAL.DB
 
         public Message()
         {
-            DateCreate = DateTime.Now.Date;
-            DateStart = DateTime.Now.Date;// need default ??? 
+          //  DateCreate = DateTime.Now.Date;
+          //  DateStart = DateTime.Now.Date;// need default ??? 
         }
     }
 }

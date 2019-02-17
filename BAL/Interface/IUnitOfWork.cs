@@ -17,5 +17,6 @@ namespace BAL.Interface
         SignInManager<ApplicationUser> SignInRepository { get; }
         UserMessageRepository UserMessageRepository { get; }
         PhoneRecRepository PhoneRecRepository { get; }
+        MessageRepository MessageRepository { get; }
     }
 }

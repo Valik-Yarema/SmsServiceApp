@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "My Messages";
+}
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            
+        }
+
+            ul tt {
+                border: 1px solid #ddd;
+                margin-top: -1px; /* Prevent double borders */
+                background-color: #f6f6f6;
+                padding: 12px;
+                text-decoration: none;
+                font-size: 18px;
+                color: black;
+                display: block;
+                position: relative;
+                width: 100%;
+            }
+
+                ul tt:hover {
+                    background-color: #eee;
+                }
+
+        
+
+            .close:hover {
+                background: #bbb;
+            }
+    </style>
+</head>
+<section>
+    <h4>Messages</h4>
+    <table border="1" cellpadding="2" cellspacing="2">
+      <tr>
+            <td align="center"><p>Text</p></td>
+            <td align="center"><p>Recepients</p></td>
+        </tr>
+        @foreach (var mes in ViewBag.MessagesList)
+        {
+            <tr>
+                <td><li>@mes.MessageText</li></td>
+                <td>
+                    <ul>
+                        @foreach (var phone in mes.PhoneNumber)
+                        {
+                        <li>@phone</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </table>
+</section>  

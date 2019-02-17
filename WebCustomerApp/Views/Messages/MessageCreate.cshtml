@@ -1,52 +1,154 @@
-﻿
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
 @using WebCustomerApp.Models.MessageViewModels
 @model MessageModel
+@*@inject SignInManager<ApplicationUser> SignInManager*@
+
 @{
     ViewData["Title"] = "MessageCreate";
 }
-<h2>Message</h2>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
-    <div class="col-md-4">
-        <section>
-            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="PhoneNumber"></label>
-                    <input asp-for="PhoneNumber" class="form-control" />
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="NameRecipient"></label>
-                    <input asp-for="NameRecipient" class="form-control" />
-                    <span asp-validation-for="NameRecipient" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                  
-                        <label asp-for="MessageText">
-                            <input asp-for="MessageText" />
-                            <span asp-validation-for="MessageText" class="text-danger"></span>
-                        </label>
-                   
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Log in</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a asp-action="ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
-                    </p>
-                </div>
-            </form>
-        </section>
-    </div>
-    
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
+<h2>@ViewData["Title"]</h2>
+<head>
+
+    <script>
+        class Session extends Map {
+            set(id, value) {
+                if (typeof value === 'object') value = JSON.stringify(value);
+                sessionStorage.setItem(id, value);
+            }
+
+            get(id) {
+                const value = sessionStorage.getItem(id);
+                try {
+                    return JSON.parse(value);
+                } catch (e) {
+                    return value;
+                }
+            }
+        }
+        const session = new Session();
+        session.set(2, {name: 'yes'})
+
+    </script>
+</head>
+<table>
+    <tr class="row">
+        <td class="col-md-6">
+            <section>
+                <div class="form-group">
+                    <label>Recepient phone</label>
+                    <input id="recepientEditor" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" id="phoneError" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <button onclick="AddRecepient()">Add recepient</button>
+                    <button onclick="RemoveRecepient()">Remove recepient</button>
+                </div>
+
+                <br>
+
+                <div class="form-group">
+                    <label>Message text</label>
+                    <input id="messageEditor" class="form-control" />
+                </div>
+
+                <button type="submit" onclick="MakeModel()" HttpMethod=Post; id="sendMessage" class="btn btn-default">Send</button>
+
+                <div>
+                    <br />
+                    <label id="info"></label>
+                </div>
+
+
+         
+               
+
+            <div class="form-group">
+                <textarea id="phones" value="Add Message" rows="10" readonly="readonly"></textarea>
+            </div>
+               
+
+            </section>
+        </td>
+       
+    </tr>
+</table>
+
+<script type="text/javascript">
+    var phones = [];
+    function AddRecepient() {
+        var input = document.getElementById("recepientEditor");
+        var errorMessage = document.getElementById("phoneError");
+        var info = document.getElementById("info");
+        info.textContent = "";
+        errorMessage.textContent = "";
+        var reg = new RegExp("^[+][0-9]{12}$");
+        if (reg.test(input.value)) {
+            phones.push(input.value);
+            var textarea = document.getElementById("phones");
+            textarea.textContent += input.value + "\n";
+            input.value = "";
+        }
+        else {
+            errorMessage.textContent = "Incorrect phone number";
+        }
+    }
+    function RemoveRecepient() {
+        var input = document.getElementById("recepientEditor");
+        var errorMessage = document.getElementById("phoneError");
+        var info = document.getElementById("info");
+        info.textContent = "";
+        errorMessage.textContent = "";
+        if (phones.indexOf(input.value) == -1) {
+            errorMessage.textContent = "This phone not find in recepients list";
+        }
+        else {
+            var index = phones.indexOf(input.value);
+            phones.splice(index, 1)
+            textarea = document.getElementById("phones");
+            textarea.textContent = textarea.textContent.replace(input.value + "\n", "");
+            input.value = "";
+        }
+    }
+    function MakeModel() {
+        var message = document.getElementById("messageEditor")
+        var info = document.getElementById("info");
+        info.textContent = "";
+        if (phones.length == 0) {
+            info.style.color = "red"
+            info.textContent = "Recepiens list are empty";
+        }
+        else if (message.value == '') {
+            info.style.color = "red"
+            info.textContent = "Please, add text of message";
+        }
+        else {
+            var Message = {};
+            Message.MessageText = message.value;
+            Message.PhoneNumber = phones;
+            session.set(1, { PhoneNumber: phones, MessageText :message.value });
+            session.get(1);
+            $.ajax(
+                {
+                    url: '/Messages/MessageCreate',
+                  
+                    type: 'POST',
+                    data: Message
+                });
+            info.style.color = "green"
+            info.textContent = "Messages are sended";
+
+
+           
+        
+        }
+    }
+</script>

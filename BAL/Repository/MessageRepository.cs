@@ -14,12 +14,18 @@ namespace BAL.Repository
         {
         }
 
-        public void Create(DateTime dataStart, int period, DateTime dateEnd, int phoneId, int userMesId)
+        /*public void Create(DateTime dataStart, int period, DateTime dateEnd, int phoneId, int userMesId)
         {
             Message message = new Message() { DateStart = dataStart, PeriodCount = period, DateEnd = dateEnd ,PhoneId=phoneId,UserMesId=userMesId};
             context.Messages.Add(message);
             context.SaveChanges();
-        }
+        }*/
+        public void Create(int userMessageId,int phoneRecId)
+        {
+            Message message = new Message() { PhoneId = phoneRecId, UserMesId = userMessageId };
+            context.Messages.Add(message);
+            context.SaveChanges();
 
+        }
     }
 }

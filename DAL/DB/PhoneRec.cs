@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using WebCustomerApp.Models;
 
 namespace DAL.DB
 {
@@ -13,8 +15,10 @@ namespace DAL.DB
         [Required]
         public string PhoneNumber { get; set; }
 
-
-
+       /* [ForeignKey("ApplicationUser")]
+        public string Id { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+        */
         public ICollection<AddInfo> PhoneColl { get; set; }
      //   public ICollection<Message> PhoneMesColl { get; set; }
 

@@ -9,8 +9,8 @@ namespace BAL.Interface
 {
     public interface IMessage : IRepository<Message>
     {
-        void Create(DateTime dataStart, int period, DateTime dateEnd ,int phoneId,int userMesId );
-
+      //  void Create(DateTime dataStart, int period, DateTime dateEnd ,int phoneId,int userMesId );
+        void Create(int userMessageId, int phoneRecId);
       /*  Message SearchByCreateDate(DateTime dateTime);
 
 

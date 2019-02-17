@@ -12,11 +12,11 @@ namespace WebCustomerApp.Models
     public class ApplicationUser : IdentityUser
     {
 
-      public ICollection<PhoneRec> PhoneRecs { get; set; }
+   //   public ICollection<PhoneRec> PhoneRecs { get; set; }
       public ICollection<UserMessage> UserMessages { get; set; }
        public ApplicationUser()
         {
-            PhoneRecs = new List<PhoneRec>();
+     //       PhoneRecs = new List<PhoneRec>();
             UserMessages = new List<UserMessage>();
         }
     }
