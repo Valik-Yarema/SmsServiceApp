@@ -15,10 +15,10 @@ namespace DAL.DB
         [Required]
         public string PhoneNumber { get; set; }
 
-       /* [ForeignKey("ApplicationUser")]
-        public string Id { get; set; }
+        [ForeignKey("ApplicationUser")]
+        public string UserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
-        */
+       
         public ICollection<AddInfo> PhoneColl { get; set; }
      //   public ICollection<Message> PhoneMesColl { get; set; }
 

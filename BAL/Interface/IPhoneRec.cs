@@ -9,5 +9,6 @@ namespace BAL.Interface
     {
         void Create(string phoneNumber);
         PhoneRec SearchByPhone(string phoneNumber);
+    
     }
 }

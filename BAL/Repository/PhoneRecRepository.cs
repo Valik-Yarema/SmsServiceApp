@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WebCustomerApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BAL.Repository
 {
@@ -26,6 +27,10 @@ namespace BAL.Repository
             PhoneRec phone = context.PhoneRecs.FirstOrDefault(p => p.PhoneNumber == phoneNumber);
             return phone;
         }
-        
+
+        public List<PhoneRec> GetByUserId(string userId)
+        {
+            return dbSet.Where(item => item.UserId == userId).ToList();
+        }
     }
 }
