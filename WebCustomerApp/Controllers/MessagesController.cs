@@ -35,17 +35,7 @@ namespace WebApp.Controllers
                 [HttpPost]
                 [ValidateAntiForgeryToken]
                 public IActionResult MessageCreate(MessageModel model, string returnUrl = null)
-                {
-                    //https://www.w3schools.com/howto/howto_css_list_group.asp
-                    //https://www.w3schools.com/howto/howto_js_snackbar.asp
-                    //https://www.w3schools.com/howto/howto_js_active_element.asp
-                    //https://www.w3schools.com/howto/howto_js_treeview.asp
-                    //https://www.w3schools.com/howto/howto_js_typewriter.asp
-
-                    //add phone https://www.w3schools.com/howto/howto_js_close_list_items.asp or https://www.w3schools.com/howto/howto_js_list_grid_view.asp
-                    //position move https://www.w3schools.com/howto/howto_js_draggable.asp
-                    //Bootstrap https://www.w3schools.com/howto/howto_make_a_website.asp
-                    if (ModelState.IsValid)
+                {  if (ModelState.IsValid)
                     {
                         UserMessage message = new UserMessage() { MessageText = model.MessageText, Id = _unitOfWork.UserRepository.GetUserId(User) };
                         foreach (var phoneNamber in model.PhoneNumber)
@@ -62,9 +52,19 @@ namespace WebApp.Controllers
                     }
 
                     return View("");
+                    }
+                    //https://www.w3schools.com/howto/howto_css_list_group.asp
+                    //https://www.w3schools.com/howto/howto_js_snackbar.asp
+                    //https://www.w3schools.com/howto/howto_js_active_element.asp
+                    //https://www.w3schools.com/howto/howto_js_treeview.asp
+                    //https://www.w3schools.com/howto/howto_js_typewriter.asp
 
-                }*/
+                    //add phone https://www.w3schools.com/howto/howto_js_close_list_items.asp or https://www.w3schools.com/howto/howto_js_list_grid_view.asp
+                    //position move https://www.w3schools.com/howto/howto_js_draggable.asp
+                    //Bootstrap https://www.w3schools.com/howto/howto_make_a_website.asp
+                */
         [HttpPost]
+      
         public IActionResult MessageCreate(MessageModel model)
         {
             if (ModelState.IsValid)
@@ -79,7 +79,7 @@ namespace WebApp.Controllers
 
                     if (currentPhone == null)
                     {
-                        currentPhone = new PhoneRec() { PhoneNumber = phone };
+                        currentPhone = new PhoneRec() { PhoneNumber = phone , UserId= _unitOfWork.UserRepository.GetUserId(User) };
                         _unitOfWork.PhoneRecRepository.Add(currentPhone);
                     }
 
@@ -94,7 +94,7 @@ namespace WebApp.Controllers
                 return View(model);
             }
         }
-
+     
         public IActionResult MessageList()
         {
             string userID = _unitOfWork.UserRepository.GetUserId(User);
@@ -114,13 +114,7 @@ namespace WebApp.Controllers
             }
             ViewBag.MessagesList = messageList;
 
-            //foreach (var mes in ViewBag.MessagesList)
-            //{
-            //	foreach (var phone in mes.RecepientPhones)
-            //	{
-            //		continue;
-            //	}
-            //}
+          
 
             return View();
         }

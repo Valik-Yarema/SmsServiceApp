@@ -27,5 +27,11 @@ namespace BAL.Repository
             context.SaveChanges();
 
         }
+
+        public Message GetByPhoneId(int phoneId)
+        {
+            Message phone = context.Messages.FirstOrDefault(p => p.PhoneId == phoneId);
+            return phone;
+        }
     }
 }

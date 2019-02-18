@@ -5,17 +5,20 @@ using System.Threading.Tasks;
 using BAL.Interface;
 using DAL.DB;
 using Microsoft.AspNetCore.Mvc;
-using Models.PhoneRecViewModels;
+using WebCustomerApp.Models.PhoneRecViewModels;
 using WebCustomerApp.Models;
+
+
+
 namespace WebApp.Controllers
 {
-    [Produces("application/json")]
-    [Route("Phone/[action]")]
-    public class PhoneController
+    [Route("[controller]/[action]")]
+    public class PhoneController : Controller
     {
+
+     
+        private IUnitOfWork _unitOfWork;
         
-       
-            private IUnitOfWork _unitOfWork;
 
             public PhoneController(IUnitOfWork unitOfWork)
             {
@@ -27,44 +30,55 @@ namespace WebApp.Controllers
                 return View();
             }
 
-        private IActionResult View()
-        {
-            throw new NotImplementedException();
-        }
+      
 
         [Route("~/Phone/GetPhones")]
             [HttpGet]
             public ICollection<PhoneVieweModel> GetPhones()
             {
-                List<Phone> phones = _unitOfWork._phoneRepository.GetByUserId(_unitOfWork._userManager.GetUserId(User));
-                List<RecepientModel> recepientModels = new List<PhoneVieweModel>();
+               
+                List<PhoneRec> phones = _unitOfWork.PhoneRecRepository.GetByUserId(_unitOfWork.UserRepository.GetUserId(User));
+                List<PhoneVieweModel> recepientModels = new List<PhoneVieweModel>();
                 foreach (var phone in phones)
                 {
-                PhoneVieweModel recepientModel = new PhoneVieweModel { id = phone.PhoneId, FullName = phone.FullName, PhoneNumber = phone.PhoneNumber };
-                    recepientModels.Add(recepientModel);
+                    PhoneVieweModel recepient= new PhoneVieweModel { id = phone.PhoneId, PhoneNumber = phone.PhoneNumber };
+                    recepientModels.Add(recepient);
                 }
                 return recepientModels;
+            
             }
 
             [HttpGet("{id}")]
-            public PhoneVieweModel Get(int id)
+            public PhoneVieweModel Get(string userId)
             {
-                Phone phone = _unitOfWork._phoneRepository.GetById(id);
-            PhoneVieweModel recepientModel = new PhoneVieweModel { id = phone.PhoneId, FullName = phone.FullName, PhoneNumber = phone.PhoneNumber };
-                return recepientModel;
+                PhoneRec phone = _unitOfWork.PhoneRecRepository.GetByID(userId);
+
+            PhoneVieweModel recepient = new PhoneVieweModel { id = phone.PhoneId, PhoneNumber = phone.PhoneNumber };
+                return recepient;
             }
 
-            [Route("~/Phone/AddPhone")]
+        //  [Route("~/Phone/CreatePhone")]
+        [HttpGet]
+        public IActionResult CreatePhone()
+        {
+            return View();
+        }
+
             [HttpPost]
-            public IActionResult AddPhone(PhoneVieweModel obj)
+            public IActionResult CreatePhone(PhoneVieweModel obj)
             {
-                PhoneRec phone = new PhoneRec();
-                phone.UserId = _unitOfWork._userManager.GetUserId(User);
-                phone.PhoneNumber = obj.PhoneNumber;
-            
-                _unitOfWork.PhoneRecRepository.Create(phone);
+            if ((_unitOfWork.PhoneRecRepository.SearchByPhone(obj.PhoneNumber)==null)||
+                   (_unitOfWork.PhoneRecRepository.SearchByPhone(obj.PhoneNumber).UserId != _unitOfWork.UserRepository.GetUserId(User))) 
+            {
+                PhoneRec phone = new PhoneRec() { UserId = _unitOfWork.UserRepository.GetUserId(User), PhoneNumber = obj.PhoneNumber };
+                _unitOfWork.PhoneRecRepository.Add(phone);
                 _unitOfWork.Save();
-                return new ObjectResult("Employee added successfully!");
+            }
+            else
+            {
+                return new ObjectResult("Resipient already exists");
+            }
+            return View();
             }
 
             [Route("~/Phone/UpdatePhone")]
@@ -73,26 +87,26 @@ namespace WebApp.Controllers
             {
                 PhoneRec phone = new PhoneRec();
                 phone.PhoneId = obj.id;
-                phone.UserId = _unitOfWork._userManager.GetUserId(User);
+                phone.UserId = _unitOfWork.UserRepository.GetUserId(User);
                 phone.PhoneNumber = obj.PhoneNumber;
-                phone.FullName = obj.FullName;
-                _unitOfWork._phoneRepository.Update(phone);
+            
+                _unitOfWork.PhoneRecRepository.Update(phone);
                 return new ObjectResult("Employee modified successfully!");
             }
 
-            [Route("~/Phone/DeletePhone/{id}")]
+           /* [Route("~/Phone/DeletePhone/{id}")]
             [HttpDelete]
-            public IActionResult Delete(int id)
+            public IActionResult Delete(string phone)
             {
-                List<RecepientMessage> recepientMessages = _unitOfWork._recepientMessageRepository.GetRecepientsMessagesByRecipientId(id);
+            List<PhoneRec> recepientMessages = _unitOfWork.PhoneRecRepository.SearchByPhone(phone);
                 foreach (var recepientMessage in recepientMessages)
                 {
-                    _unitOfWork._recepientMessageRepository.Delete(recepientMessage);
+                    _unitOfWork.MessageRepository.Delete(recepientMessage);
                 }
-                _unitOfWork._phoneRepository.Delete(id);
-                _unitOfWork.SaveChanges();
+                _unitOfWork.PhoneRecRepository.Delete(phoneid);
+                _unitOfWork.Save();
                 return new ObjectResult("Employee deleted successfully!");
-            }
+            }*/
         
     }
 }

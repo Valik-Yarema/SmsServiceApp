@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-
-namespace Models.PhoneRecViewModels
+namespace WebCustomerApp.Models.PhoneRecViewModels
 {
    public class PhoneVieweModel
     {

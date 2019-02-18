@@ -1,8 +1,11 @@
-﻿
-@using WebCustomerApp.Models.MessageViewModels
-@model MessageModel
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@using WebCustomerApp.Models.PhoneRecViewModels
+@model PhoneVieweModel
 @{
-    ViewData["Title"] = "MessageCreate";
+    ViewData["Title"] = "CreatePhone";
 }
 <h2>Message</h2>
 @using (Html.BeginForm())
@@ -20,21 +23,13 @@
                     <input asp-for="PhoneNumber" class="form-control" />
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="NameRecipient"></label>
-                    <input asp-for="NameRecipient" class="form-control" />
-                    <span asp-validation-for="NameRecipient" class="text-danger"></span>
+                    <button onclick="Sendtext()" type="submit" class="btn btn-default">Add recipient</button>
                 </div>
-                <div class="form-group">
-                  
-                        <label asp-for="MessageText">
-                            <input asp-for="MessageText" />
-                            <span asp-validation-for="MessageText" class="text-danger"></span>
-                        </label>
-                   
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Log in</button>
+                <div>
+                    <br />
+                    <label id="info"></label>
                 </div>
                 <div class="form-group">
                     <p>
@@ -47,6 +42,16 @@
             </form>
         </section>
     </div>
-    
+    <script type="text/javascript">
+        function Sendtext()
+        {
+            info.style.color = "green"
+            info.textContent = "Messages are sended";
+        }
+
+
+    </script>
+
+  
 }
 
